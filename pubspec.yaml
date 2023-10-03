@@ -63,6 +63,10 @@ flutter:
   assets:
     - assets/images_login/bear.png
     - assets/images_login/bear_looking.png
+    - assets/images_login/image1.png
+    - assets/images_login/image2.png
+    - assets/images_login/initial.png
+    - assets/images_login/wide_screen_login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -36,81 +36,115 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return Image.asset(
-                  _isPasswordVisible
-                      ? 'assets/images_login/bear_looking.png'
-                      : 'assets/images_login/bear.png',
-                  width: 200,
-                  height: 200,
-                );
-              },
-            ),
-            TextField(
-              onChanged: (text) {
-                _animationController.forward();
-              },
-              decoration: InputDecoration(labelText: 'User Name'),
-            ),
-            TextField(
-              obscureText: !_isPasswordVisible,
-              onChanged: (text) {
-                _animationController.forward();
-              },
-              decoration: InputDecoration(
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if (constraints.maxWidth > 600) {
+            return buildWideScreenLayout();
+          } else {
+            return buildMobileLayout();
+          }
+        },
+      ),
+    );
+  }
+
+  Widget buildWideScreenLayout() {
+    return Row(
+      children: [
+        Expanded(
+          child: Image.asset(
+            'assets/images_login/wide_screen_login.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+        Expanded(child: buildOriginalContent()),
+      ],
+    );
+  }
+
+  Widget buildMobileLayout() {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images_login/bear.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned.fill(
+          child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, child) {
+              return Opacity(
+                opacity: _animationController.value,
+                child: Image.asset(
+                  'assets/images_login/bear_looking.png',
+                  fit: BoxFit.cover,
                 ),
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: buildOriginalContent(),
+        ),
+      ],
+    );
+  }
+
+  Widget buildOriginalContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          onChanged: (text) {
+            _animationController.forward();
+          },
+          decoration: InputDecoration(labelText: 'User Name'),
+        ),
+        TextField(
+          obscureText: !_isPasswordVisible,
+          onChanged: (text) {
+            _animationController.forward();
+          },
+          decoration: InputDecoration(
+            labelText: 'Password',
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
               ),
+              onPressed: () {
+                setState(() {
+                  _isPasswordVisible = !_isPasswordVisible;
+                });
+              },
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: Text('Forgot Password?'),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () {
-                    // Handle forgot password
-                  },
-                  child: Text('Forgot Password?'),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Login'),
                 ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle login
-                      },
-                      child: Text('Login'),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle sign up
-                      },
-                      child: Text('Sign Up'),
-                    ),
-                  ],
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Sign Up'),
                 ),
               ],
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 
