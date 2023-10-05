@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:henskens/screens/login_screen.dart';
+import 'package:henskens/screens/login/login_screen.dart';
 
 void main() {
   runApp(const GlobeApp());
