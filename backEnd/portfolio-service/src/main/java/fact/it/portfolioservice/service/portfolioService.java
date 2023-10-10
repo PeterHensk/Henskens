@@ -7,6 +7,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class portfolioService {
@@ -30,5 +32,9 @@ public class portfolioService {
 
             portfolioRepository.save(post);
         }
+    }
+
+    public List<Post> getAllPostsWithComments() {
+        return PortfolioRepository.findAllWithComments();
     }
 }
