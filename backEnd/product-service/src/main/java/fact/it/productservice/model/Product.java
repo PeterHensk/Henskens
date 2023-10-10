@@ -15,8 +15,9 @@ import java.math.BigDecimal;
 @Data
 public class Product {
     private String id;
+    private String userId;
     private String skuCode;
     private String name;
     private String description;
-    private BigDecimal price;
+    private String information;
 }

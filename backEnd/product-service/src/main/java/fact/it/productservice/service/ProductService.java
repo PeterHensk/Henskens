@@ -22,16 +22,18 @@ public class ProductService {
         if(productRepository.count() <= 0){
             Product product = Product.builder()
                     .skuCode("tube6in")
-                    .name("Stainless steel acid-resistant seamless tube OD 6 mm x 1 mm steel grade 316 / 316L 180cm")
-                    .price(BigDecimal.valueOf(7.50))
-                    .description("")
+                    .userId("peter.Henskens@gmail.com")
+                    .name("Roos")
+                    .information("healty rose, but to much shade")
+                    .description("Its a red rose with white dots")
                     .build();
 
             Product product1 = Product.builder()
-                    .skuCode("beam10ft")
-                    .name("Wooden beam 10 feet long")
-                    .price(BigDecimal.valueOf(5.50))
-                    .description("Faux Wood Beams - 10 ft. Length & 10 in. Width Cast from natural wood beams with surface textures and wood-grain detail")
+                    .skuCode("tube6in")
+                    .userId("lisawouters@hotmail.com")
+                    .name("Daisy")
+                    .information("Its to dry, give it some watter")
+                    .description("ne flauwe plant, niets speciaals")
                     .build();
 
             productRepository.save(product);
@@ -42,9 +44,10 @@ public class ProductService {
     public void createProduct(ProductRequest productRequest){
         Product product = Product.builder()
                 .skuCode(productRequest.getSkuCode())
+                .userId(productRequest.getUserId())
                 .name(productRequest.getName())
                 .description(productRequest.getDescription())
-                .price(productRequest.getPrice())
+                .information(productRequest.getInformation())
                 .build();
 
         productRepository.save(product);
@@ -65,10 +68,11 @@ public class ProductService {
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
+                .userId(product.getUserId())
                 .skuCode(product.getSkuCode())
                 .name(product.getName())
                 .description(product.getDescription())
-                .price(product.getPrice())
+                .information(product.getInformation())
                 .build();
     }
 
