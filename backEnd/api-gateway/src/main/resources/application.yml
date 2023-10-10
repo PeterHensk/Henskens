@@ -27,8 +27,8 @@ spring:
           filters:
             - SetPath=/api/product/all
         - id: order-service
-          uri: http://${ORDER_SERVICE_BASEURL:localhost:8081}
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/orders
+            - Path=/users
           filters:
-            - SetPath=/api/order
+            - SetPath=/api/user
