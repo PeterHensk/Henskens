@@ -19,14 +19,14 @@ spring:
             - Method=POST
           filters:
             - SetPath=/api/product
-        - id: product-service-all
-          uri: http://${PRODUCT_SERVICE_BASEURL:localhost:8080}
+        - id: portfolio-service
+          uri: http://${PORTFOLIO_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/products
+            - Path=/portfolios
             - Method=GET
           filters:
-            - SetPath=/api/product/all
-        - id: order-service
+            - SetPath=/api/portfolio
+        - id: user-service
           uri: http://${USER_SERVICE_BASEURL:localhost:8081}
           predicates:
             - Path=/users
