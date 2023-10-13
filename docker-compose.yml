@@ -1,4 +1,16 @@
 services:
+
+product-service:
+    build:
+      context: backEnd\product-service\Dockerfile\product-service  
+    depends_on:
+      - mongo-products
+    ports:
+      - "8080:8080"
+    environment:
+      MONGODB_PORT: 27017
+      MONGODB_HOST: mongo-products
+
  mongo-products:
   image: mongo:latest
   ports:
