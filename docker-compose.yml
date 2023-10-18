@@ -60,7 +60,7 @@ services:
     - portfolio-service
   image: peterhenskens/user-service:latest
   build:
-    context: ./user-service
+    context: user-service
   ports:
     - 8081:8081
   links:
