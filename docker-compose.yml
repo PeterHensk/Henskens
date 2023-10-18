@@ -29,7 +29,7 @@ services:
     - mongo-products
   image: peterhenskens/product-service:latest
   build:
-    context: ./product-service
+    context: ./backEnd/product-service
     dockerfile: Dockerfile
   ports:
     - 8080:8080
@@ -44,7 +44,7 @@ services:
     - mysql-portfolio
   image: peterhenskens/portfolio-service:latest
   build:
-    context: ./portfolio-service
+    context: ./backEnd/portfolio-service
     dockerfile: Dockerfile
   ports:
     - 8082:8082
@@ -62,7 +62,7 @@ services:
     - portfolio-service
   image: peterhenskens/user-service:latest
   build:
-    context: ./user-service
+    context: ./backEnd/user-service
     dockerfile: Dockerfile
   ports:
     - 8081:8081
@@ -83,7 +83,7 @@ services:
      - user-service
    image: peterhenskens/api-gateway:latest
    build:
-    context: ./api-gateway
+    context: ./backEnd/api-gateway
     dockerfile: Dockerfile
    ports:
      - 8083:8083
