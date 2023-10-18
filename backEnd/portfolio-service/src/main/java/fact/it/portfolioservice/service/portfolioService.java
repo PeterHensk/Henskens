@@ -34,7 +34,7 @@ public class portfolioService {
         }
     }
 
-    public List<Post> getAllPostsWithComments() {
-        return PortfolioRepository.findAllWithComments();
-    }
+//    public List<Post> getAllPostsWithComments() {
+//        return PortfolioRepository.findAllWithComments();
+//    }
 }

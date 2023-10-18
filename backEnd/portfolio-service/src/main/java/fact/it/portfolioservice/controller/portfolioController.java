@@ -17,9 +17,9 @@ class PortfolioController {
 
     private final portfolioService portfolioService;
 
-    @GetMapping("/posts")
-    public ResponseEntity<List<Post>> getAllPostsWithComments() {
-        List<Post> posts = portfolioService.getAllPostsWithComments();
-        return ResponseEntity.ok(posts);
-    }
+//    @GetMapping("/posts")
+//    public ResponseEntity<List<Post>> getAllPostsWithComments() {
+//        List<Post> posts = portfolioService.getAllPostsWithComments();
+//        return ResponseEntity.ok(posts);
+//    }
 }
