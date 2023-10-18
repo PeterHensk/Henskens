@@ -30,6 +30,7 @@ services:
   image: peterhenskens/product-service:latest
   build:
     context: ./product-service
+    dockerfile: Dockerfile
   ports:
     - 8080:8080
   links:
@@ -44,6 +45,7 @@ services:
   image: peterhenskens/portfolio-service:latest
   build:
     context: ./portfolio-service
+    dockerfile: Dockerfile
   ports:
     - 8082:8082
   links:
@@ -60,7 +62,8 @@ services:
     - portfolio-service
   image: peterhenskens/user-service:latest
   build:
-    context: user-service
+    context: ./user-service
+    dockerfile: Dockerfile
   ports:
     - 8081:8081
   links:
@@ -81,6 +84,7 @@ services:
    image: peterhenskens/api-gateway:latest
    build:
     context: ./api-gateway
+    dockerfile: Dockerfile
    ports:
      - 8083:8083
    links:
