@@ -13,7 +13,7 @@ spring:
     gateway:
       routes:
         - id: henskens-service
-          uri: http://${PRODUCT_SERVICE_BASEURL:localhost:8080}
+          uri: http://${HENSKENS_SERVICE_BASEURL:localhost:8091}
           predicates:
             - Path=/henskens
             - Method=POST
