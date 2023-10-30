@@ -2,10 +2,12 @@ version: '3'
 
 services:
   henskens-service:
-    build: .
+    build:
+      context: ./backEnd/henskens-service
+      dockerfile: Dockerfile
     container_name: henskens-service
     ports:
-      - "8080:8080" # Expose your Spring application's port
+      - "8080:8080"
 
   api-gateway:
     depends_on:
