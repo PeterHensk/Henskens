@@ -2,6 +2,7 @@ version: '3'
 
 services:
   henskens-service:
+    image: peterhenskens/henskens-service:latest
     build:
       context: ./backEnd/henskens-service
       dockerfile: Dockerfile
