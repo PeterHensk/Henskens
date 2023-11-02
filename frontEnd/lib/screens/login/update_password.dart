@@ -29,7 +29,7 @@ class _UpdatePasswordState extends State<UpdatePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign Up')),
+      appBar: AppBar(title: const Text('Sign Up')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -37,7 +37,7 @@ class _UpdatePasswordState extends State<UpdatePasswordPage> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email Address'),
+                decoration: const InputDecoration(labelText: 'Email Address'),
                 validator: (value) {
                   if (value == null || value.isEmpty || !value.contains('@')) {
                     return 'Please enter a valid email address';
@@ -48,7 +48,7 @@ class _UpdatePasswordState extends State<UpdatePasswordPage> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password';
@@ -59,7 +59,7 @@ class _UpdatePasswordState extends State<UpdatePasswordPage> {
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Confirm Password'),
+                decoration: const InputDecoration(labelText: 'Confirm Password'),
                 validator: (value) {
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';
@@ -72,11 +72,11 @@ class _UpdatePasswordState extends State<UpdatePasswordPage> {
                   if (_formKey.currentState!.validate()) {
                     // Handle sign up
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Check your eamil to confirm the updating of the password!')),
+                      const SnackBar(content: Text('Check your eamil to confirm the updating of the password!')),
                     );
                   }
                 },
-                child: Text('Update password'),
+                child: const Text('Update password'),
               ),
             ],
           ),

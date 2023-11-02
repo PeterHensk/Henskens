@@ -13,6 +13,7 @@ public class AccountResponse {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    private String hashPassword;
     private String phoneNumber;
     private String role;
 }

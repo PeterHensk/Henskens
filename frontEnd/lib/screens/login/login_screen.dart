@@ -1,11 +1,12 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'login_form.dart';
-import '../plant/lookup_plants.dart';
+import '../portfolio/portfolio_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,22 +20,38 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   late AnimationController _animationController;
-  List<CameraDescription> cameras = [];
   late Future<void> _initializeCamerasFuture;
+
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 1) {
+        // Navigate to PortfolioScreen when the CV/Portfolio icon is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const PortfolioScreen()),
+        );
+      }
+    });
   }
 
   @override
@@ -43,42 +60,25 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Added this line
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            LoginForm(animationController: _animationController), // Existing LoginForm
-            ElevatedButton( // New button
-              onPressed: () {
-                if (cameras.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CameraPage(cameras: cameras),
-                    ),
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Error'),
-                        content: Text('No camera found on this device.'),
-                        actions: [
-                          TextButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: Text('Move without login'),
-            ),
+            LoginForm(animationController: _animationController),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.description), // You can change this icon to match your CV/Portfolio icon
+            label: 'Portfolio',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }

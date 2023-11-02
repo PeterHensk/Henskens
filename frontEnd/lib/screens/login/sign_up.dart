@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:henskens/models/AccountData.dart';
+import 'package:http/http.dart' as http;
+
+import 'login_form.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,30 +18,80 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignUpPage(),
+      home: const SignUpPage(),
     );
   }
 }
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailAddressController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  String? _selectedCountry;
-  final List<String> _countries = [
-    'Belgium',
-    'Netherlands',
-    'United Kingdom',
-    'France',
-    'Germany'
-  ];
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  Future<void> registerUser(AccountData data) async {
+    final url = Uri.parse('http://192.168.0.182:8083/signup');
+    final headers = {'Content-Type': 'application/json'};
+    final body = data.toJson();
+
+    final response =
+        await http.post(url, headers: headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      // Registration successful
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+              title: const Text('Login'),
+            ),
+            body: SingleChildScrollView(
+              child: LoginForm(animationController: _animationController),
+            ),
+          ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Successfully signed up!')),
+      );
+    } else if (response.statusCode == 409) {
+      // User with this email already exists
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User with this email already exists.')),
+      );
+    } else {
+      // Handle other errors
+      final responseContent = response.body;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+                'Registration failed. Please try again. Error: $responseContent')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +104,8 @@ class _SignUpPageState extends State<SignUpPage> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'First Name'),
+                controller: _firstNameController,
+                decoration: const InputDecoration(labelText: 'First Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your first name';
@@ -55,7 +114,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Last Name'),
+                controller: _lastNameController,
+                decoration: const InputDecoration(labelText: 'Last Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your last name';
@@ -64,7 +124,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email Address'),
+                controller: _emailAddressController,
+                decoration: const InputDecoration(labelText: 'Email Address'),
                 validator: (value) {
                   if (value == null || value.isEmpty || !value.contains('@')) {
                     return 'Please enter a valid email address';
@@ -72,41 +133,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Country name'),
-                items: _countries.map((String country) {
-                  return DropdownMenuItem<String>(
-                    value: country,
-                    child: Text(country),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedCountry = newValue;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select your country';
-                  }
-                  return null;
-                },
-                value: _selectedCountry,
-              ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Postal code'),
+                controller: _phoneNumberController,
+                decoration: const InputDecoration(labelText: 'Phone number'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your postal code';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Street and number'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your street and number';
+                    return 'Please enter your phone number';
                   }
                   return null;
                 },
@@ -114,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password';
@@ -125,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Confirm Password'),
+                decoration: const InputDecoration(labelText: 'Confirm Password'),
                 validator: (value) {
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';
@@ -137,12 +169,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Handle sign up
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Successfully signed up!')),
-                    );
+                    registerUser(AccountData(
+                      firstName: _firstNameController.text,
+                      lastName: _lastNameController.text,
+                      emailAddress: _emailAddressController.text,
+                      phoneNumber: _phoneNumberController.text,
+                      password: _passwordController.text,
+                    ));
                   }
                 },
-                child: Text('Sign Up'),
+                child: const Text('Sign Up'),
               ),
             ],
           ),

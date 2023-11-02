@@ -16,7 +16,7 @@ import java.util.Optional;
 @Collection("account")
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-    List<Account> findByFirstName(String firstName);
+    Account findByEmailAddress(String emailAddress);
 
     List<Account> findByLastName(String lastName);
 

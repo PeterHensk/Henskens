@@ -37,6 +37,9 @@ public class Account {
     private String emailAddress;
 
     @Field
+    private String hashPassword;
+
+    @Field
     private String phoneNumber;
 
     @Field
@@ -44,4 +47,7 @@ public class Account {
 
     @Field
     private LocalDateTime updated;
+
+    @Field
+    private LocalDateTime lastLogin;
 }

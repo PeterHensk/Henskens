@@ -30,7 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera: ^0.9.4+5
+  http: ^1.1.0
+  font_awesome_flutter: ^9.0.0
+  url_launcher: ^6.0.13
+  animated_text_kit: ^4.2.1
 
 
 
@@ -68,6 +71,8 @@ flutter:
     - assets/images_login/image2.png
     - assets/images_login/initial.png
     - assets/images_login/wide_screen_login.png
+    - assets/images_portfolio/hero.jpg
+    - assets/images_portfolio/profile-img.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

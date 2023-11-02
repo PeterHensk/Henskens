@@ -13,9 +13,23 @@ spring:
     gateway:
       routes:
         - id: henskens-service
-          uri: http://${HENSKENS_SERVICE_BASEURL:localhost:8091}
+          uri: http://${HENSKENS_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/henskens
+            - Path=/all_accounts
+            - Method=GET
+          filters:
+            - SetPath=/api/account/all
+        - id: signup-service
+          uri: http://${HENSKENS_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/signup
             - Method=POST
           filters:
-            - SetPath=/api/henskens
+            - SetPath=/api/account/register
+        - id: signin-service
+          uri: http://${HENSKENS_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/signin
+            - Method=POST
+          filters:
+            - SetPath=/api/account/login
