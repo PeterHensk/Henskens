@@ -16,7 +16,7 @@
 
     <application
         android:label="henskens"
-        android:name="be.thomasmore.ar"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
