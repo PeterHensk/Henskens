@@ -35,11 +35,12 @@ dependencies:
   url_launcher: ^6.0.13
   animated_text_kit: ^4.2.1
 
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  augmented_reality_plugin_wikitude:
+    path: ./plugin/augmented_reality_plugin_wikitude/
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,12 @@ flutter:
     - assets/images_login/wide_screen_login.png
     - assets/images_portfolio/hero.jpg
     - assets/images_portfolio/profile-img.jpg
+    - samples/
+    - samples/03_MultipleTargets_1_MultipleTargets/
+    - samples/03_MultipleTargets_1_MultipleTargets/js/
+    - samples/03_MultipleTargets_1_MultipleTargets/css/
+    - samples/03_MultipleTargets_1_MultipleTargets/assets/
+    - samples/03_MultipleTargets_1_MultipleTargets/assets/models/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

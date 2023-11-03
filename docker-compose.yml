@@ -2,6 +2,9 @@ version: '3'
 
 services:
   henskens-service:
+    network_mode: "host"
+    depends_on:
+      - couchbase
     image: peterhenskens/henskens-service:latest
     build:
       context: ./backEnd/henskens-service
@@ -25,10 +28,10 @@ services:
       PRODUCT_SERVICE_BASEURL: henskens-service:8080
       USER_SERVICE_BASEURL: henskens-service:8080
 
-  db1:
+  couchbase:
     image: couchbase
-    container_name: db1
-    hostname: db1
+    container_name: couchbase_database
+    hostname: couchbase_database
     networks:
       - couchbase-net
     ports:
